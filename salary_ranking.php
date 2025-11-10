@@ -22,25 +22,48 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
         th, td { border: 1px solid #ddd; padding: 8px; 
             text-align: left; 
         }
-        th { background-color: var(--background-color); 
+        th{
+            background-color: var(--accent-color);
+        }
+        th { 
+            /* background-color: var(--background-color);  */
             text-align: center; 
         }
-        tr:nth-child(even) { background-color: var(--background-color); }
+        /* tr:nth-child(even) { background-color: var(--background-color); } */
         td:first-child, td:last-child { text-align: center; }
+        tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){background-color: #80B0BD ;}
         td:nth-child(4) { text-align: right; }
-        .form_horizontal{width:220px;}
+        .form_horizontal{width:280px;}
         .numBtn{
             background-color:var(--background-color);
             color: var(--text-color);
-            height: 100%;
-            width: auto;
+            width:42px;
+            height: 42px;
+            font-size: 18px;
+            margin: auto 0;
+        }
+
+        /* number 안의 상하 버튼 삭제 */
+        /* chrome 등 */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
         }
     </style>
 </head>
 <body>
     <div class="layout">
+        <?php
+        include 'pages/nav.php';
+        ?>
     <h1>Get Annual Salary Ranking <br/>by player with your form.</h1>
-    <div !font-size:18>
+    <div>
         Get annual salary ranking by player with your form.<br/>
         you can filter the players by team, position, etc.  
     </div>
@@ -48,11 +71,11 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
         <div class="form_horizontal">
             <div><label for="year">Year</label></div><div>></div>
             <div>
-                <button class="numBtn" onclick="this.parentNode.querySelector('#year').stepDown()">-</button>
+                <button class="numBtn" type="button" onclick="this.parentNode.querySelector('#year').stepDown()">-</button>
                 <input type="number" id="year" name="year" 
                     value="<?php echo htmlspecialchars($year); ?>" 
                     min="1985" max="2015"> 
-                <button class="numBtn" onclick="this.parentNode.querySelector('#year').stepUp()">+</button>
+                <button class="numBtn" type="button" onclick="this.parentNode.querySelector('#year').stepUp()">+</button>
             </div>
         </div>
         <div><input id="btn" type="submit" value="Get Result"></div>
