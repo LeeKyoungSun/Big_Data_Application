@@ -7,12 +7,12 @@
     
     /* 🧩 폰트 & 크기 */
     --font-family: "Pretendard", "Noto Sans KR", sans-serif;
-    --font-size-base: 18px;
+    --font-size-base: 1em;
     --font-size-medium: 32px;
     --font-size-heading: 48px;
     --line-height: 1.6;
 }
-.header h1{
+h1{
     font-size: var(--font-size-heading);
 }
 /* 전체 공통 */
@@ -72,9 +72,15 @@ table{
 #userPage input {
      width: 500px ;
      box-sizing: border-box;
+     margin-top: 8px;
+     text-align: left;
 }
 #btn {
     background-color: var(--accent-color);
     color: var(--background-color);
     width: 100px !important;
+    text-align: center;
+}
+#userPage #btn {
+    text-align: center;
 }

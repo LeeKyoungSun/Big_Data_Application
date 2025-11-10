@@ -2,18 +2,28 @@
 <html>
 <head>
     <title>로그인</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <style>
+    </style>
 </head>
-<body>
-    <h1>로그인</h1>
+<body id="userPage">
+    <div class="layout">
+    <?php
+    include 'pages/nav.php';
+    ?>
+    <h1>Login</h1>
     <form action="login_process.php" method="POST">
-        <label for="userId">아이디:</label>
-        <input type="text" id="userId" name="userId" required>
-        <br>
-        <label for="userPW">비밀번호:</label>
-        <input type="password" id="userPW" name="userPW" required>
-        <br>
-        <input type="submit" value="로그인">
+        <div>
+            <label for="userId">ID </label><br/>
+            <input type="text" id="userId" name="userId" required>
+        </div>
+        <div>
+            <label for="userPW">Password </label><br/>
+           <input type="password" id="userPW" name="userPW" required>
+        </div>
+        <input id="btn" type="submit" value="Log in" width:100px>
     </form>
-    <p>회원가입<a href="register.php">회원가입</a></p>
+    <!-- <p><a href="register.php">Go to Sign Up</a></p> -->
+    </div>
 </body>
 </html>
