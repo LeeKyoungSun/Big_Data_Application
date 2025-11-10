@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,7 +21,7 @@
         nav a { 
             margin-right: 15px; 
             text-decoration: none; 
-            font-size: 1.1em; 
+            font-size: 0.9em; 
             width: fit-content;
             padding: 0 15px;
         }
@@ -63,6 +64,9 @@
         nav ul li ul li:hover{
             background-attachment: fixed;
         }
+        nav .login-menu{
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -93,8 +97,27 @@
                     <li><a href="game_position.php">position</a></li>
                 </ul>
             </li>
+            <li class="login-menu">
+            <?php if (isset($_SESSION['userid'])): ?>
+                    <!-- 1. 로그인 성공 -->
+                    <p>
+                        <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>님 환영합니다!
+                    </p>
+                    <a href="mypage.php">My Page</a> |
+                    <a href="logout_process.php">Logout</a>
+            
+                <?php else: ?>
+                    <!-- 2. 로그인 안 됨 -->
+                    <!-- <p>You need to Login.</p> -->
+                    <a href="login.php">Login</a> |
+                    <a href="register.php">Sign Up</a>
+            
+                <?php endif; ?>
+            </li>
         </ul>
+        
     </nav>
+
     <!-- <hr/> -->
 </body>
 

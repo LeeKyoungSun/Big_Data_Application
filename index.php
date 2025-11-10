@@ -21,30 +21,28 @@ include 'db_connect.php';
 <body>
     <div class="layout">
     <!-- 로그인/회원가입  -->
-    <div class="header">
-        <h1>Baseball Analytics</h1>
-        
-        <div class="login-menu">
-            <?php if (isset($_SESSION['userid'])): ?>
+        <!-- <div class="login-menu"> -->
+            <!-- ?php if (isset($_SESSION['userid'])): ?> -->
                 <!-- 1. 로그인 성공 -->
-                <p>
-                    <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>님 환영합니다!
-                </p>
-                <a href="mypage.php">My Page</a> | 
-                <a href="logout_process.php">Logout</a>
+                <!-- <p> -->
+                    <!-- <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>님 환영합니다! -->
+                <!-- </p> -->
+                <!-- <a href="mypage.php">My Page</a> |  -->
+                <!-- <a href="logout_process.php">Logout</a> -->
                 
-            <?php else: ?>
+            <!-- ?php else: ?> -->
                 <!-- 2. 로그인 안 됨 -->
-                <p>You need to Login.</p>
-                <a href="login.php">Login</a> | 
-                <a href="register.php">Sign Up</a>
+                <!-- <p>You need to Login.</p> -->
+                <!-- <a href="login.php">Login</a> |  -->
+                <!-- <a href="register.php">Sign Up</a> -->
                 
-            <?php endif; ?>
-        </div>
-    </div>
-    <?php
-    include 'pages/nav.php';
-    ?>
+            <!-- ?php endif; ?> -->
+        <!-- </div> -->
+        <?php
+        include 'pages/nav.php';
+        ?>
+    
+    <h1>Baseball Analytics</h1>
     <!-- <nav>
         <a href="index.php">Home</a> |
         <a href="#">Analytics by Player</a> |
