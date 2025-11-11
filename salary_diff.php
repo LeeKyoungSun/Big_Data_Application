@@ -109,7 +109,7 @@ function mf($v, $dec = 0) { // money format
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<title>리그별 연봉 비교</title>
+<title>Salary Comparison by League</title>
 <link rel="stylesheet" href="css/main.css" />
 
 <style>
@@ -169,6 +169,18 @@ function mf($v, $dec = 0) { // money format
   .card h2 {margin: 4px 0 10px;}
 
   .form_horizontal{width:250px}
+  /* number 안의 상하 버튼 삭제 */
+  /* chrome 등 */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+  -moz-appearance: textfield;
+  }
 </style>
 </head>
 <body>
@@ -177,11 +189,14 @@ function mf($v, $dec = 0) { // money format
   <?php
   include 'pages/nav.php';
   ?>
-  <h1>리그별 연봉 비교</h1>
+  <h1>Salary Comparison by League</h1>
 
 <form method="GET" action="salary_diff.php">
-  연도는 1985년부터 2015년까지 선택가능합니다. <br><br>
-
+  <!-- 연도는 1985-2015까지 선택가능합니다. <br><br> -->
+  <div>
+      Get Teams' Salary Comparison by League.<br/>
+      You can filter the data by year (1985-2015).
+  </div>
   <div class="form_horizontal">
     <div><label for="year">Year</label></div><div>></div>
     <div>
@@ -197,53 +212,53 @@ function mf($v, $dec = 0) { // money format
 <!-- 전체 합계,  리그별 소계-->
 <div class="wrap">
   <section class="card">
-    <h2>전체 합계</h2>
+    <h2>Total</h2>
     <?php if ($overall): ?>
       <table>
-        <tr><th>지표</th><th>값</th></tr>
-        <tr><td>선수 수</td><td><?php echo number_format($overall['PlayerCount']); ?></td></tr>
-        <tr><td>팀 수</td><td><?php echo number_format($overall['TeamCount']); ?></td></tr>
-        <tr><td>총 연봉</td><td><?php echo mf($overall['TotalSalary']); ?></td></tr>
-        <tr><td>평균 연봉</td><td><?php echo mf($overall['AvgSalary'], 2); ?></td></tr>
+        <tr><th>Index</th><th>Value</th></tr>
+        <tr><td>Number of Player</td><td><?php echo number_format($overall['PlayerCount']); ?></td></tr>
+        <tr><td>Number of Team</td><td><?php echo number_format($overall['TeamCount']); ?></td></tr>
+        <tr><td>Total Salary</td><td><?php echo mf($overall['TotalSalary']); ?></td></tr>
+        <tr><td>Average Salary</td><td><?php echo mf($overall['AvgSalary'], 2); ?></td></tr>
       </table>
     <?php else: ?>
-      <p>데이터가 없습니다.</p>
+      <p>There's no data.</p>
     <?php endif; ?>
   </section>
 
   <section class="card">
-    <h2>리그 AL</h2>
+    <h2>League AL</h2>
     <?php if ($AL): ?>
       <table>
-        <tr><th>지표</th><th>값</th></tr>
-        <tr><td>선수 수</td><td><?php echo number_format($AL['PlayerCount']); ?></td></tr>
-        <tr><td>팀 수</td><td><?php echo number_format($AL['TeamCount']); ?></td></tr>
-        <tr><td>총 연봉</td><td><?php echo mf($AL['TotalSalary']); ?></td></tr>
-        <tr><td>평균 연봉</td><td><?php echo mf($AL['AvgSalary'], 2); ?></td></tr>
+        <tr><th>Index</th><th>Value</th></tr>
+        <tr><td>Number of Player</td><td><?php echo number_format($AL['PlayerCount']); ?></td></tr>
+        <tr><td>Number of Team</td><td><?php echo number_format($AL['TeamCount']); ?></td></tr>
+        <tr><td>Total Salary</td><td><?php echo mf($AL['TotalSalary']); ?></td></tr>
+        <tr><td>Average Salary</td><td><?php echo mf($AL['AvgSalary'], 2); ?></td></tr>
       </table>
     <?php else: ?>
-      <p>AL 데이터가 없습니다.</p>
+      <p>There's no AL data.</p>
     <?php endif; ?>
   </section>
 
   <section class="card">
-    <h2>리그 NL</h2>
+    <h2>League NL</h2>
     <?php if ($NL): ?>
       <table>
-        <tr><th>지표</th><th>값</th></tr>
-        <tr><td>선수 수</td><td><?php echo number_format($NL['PlayerCount']); ?></td></tr>
-        <tr><td>팀 수</td><td><?php echo number_format($NL['TeamCount']); ?></td></tr>
-        <tr><td>총 연봉</td><td><?php echo mf($NL['TotalSalary']); ?></td></tr>
-        <tr><td>평균 연봉</td><td><?php echo mf($NL['AvgSalary'], 2); ?></td></tr>
+        <tr><th>Index</th><th>Value</th></tr>
+        <tr><td>Number of Player</td><td><?php echo number_format($NL['PlayerCount']); ?></td></tr>
+        <tr><td>Number of Team</td><td><?php echo number_format($NL['TeamCount']); ?></td></tr>
+        <tr><td>Total Salary</td><td><?php echo mf($NL['TotalSalary']); ?></td></tr>
+        <tr><td>Average Salary</td><td><?php echo mf($NL['AvgSalary'], 2); ?></td></tr>
       </table>
     <?php else: ?>
-      <p>NL 데이터가 없습니다.</p>
+      <p>There's no NL data.</p>
     <?php endif; ?>
   </section>
 </div>
 
 
-<h2 class="subhead">리그 내 팀별 총연봉 상·하위 3팀</h2>
+<h2 class="subhead"> Total Salary TOP/BOTTOM 3Teams in League</h2>
 
 <div class="league-rows">
   <!-- AL 상위 3 -->
@@ -251,7 +266,7 @@ function mf($v, $dec = 0) { // money format
     <h2>AL — TOP 3 </h2>
     <?php if (!empty($topAL)): ?>
       <table>
-        <tr><th>순위</th><th>팀</th><th>선수 수</th><th>총 연봉</th><th>평균 연봉</th></tr>
+        <tr><th>Rank</th><th>Team</th><th>Number of Player</th><th>Total Salary</th><th>Average Salary</th></tr>
         <?php foreach ($topAL as $i => $r): ?>
           <tr>
             <td><?php echo $i+1; ?></td>
@@ -263,7 +278,7 @@ function mf($v, $dec = 0) { // money format
         <?php endforeach; ?>
       </table>
     <?php else: ?>
-      <p>데이터가 없습니다.</p>
+      <p>There's no data.</p>
     <?php endif; ?>
   </section>
 
@@ -272,7 +287,7 @@ function mf($v, $dec = 0) { // money format
     <h2>AL — BOTTOM 3 </h2>
     <?php if (!empty($botAL)): ?>
       <table>
-        <tr><th>순위</th><th>팀</th><th>선수 수</th><th>총 연봉</th><th>평균 연봉</th></tr>
+        <tr><th>Rank</th><th>Team</th><th>Number of Player</th><th>Total Salary</th><th>Average Salary</th></tr>
         <?php foreach ($botAL as $i => $r): ?>
           <tr>
             <td><?php echo $i+1; ?></td>
@@ -284,7 +299,7 @@ function mf($v, $dec = 0) { // money format
         <?php endforeach; ?>
       </table>
     <?php else: ?>
-      <p>데이터가 없습니다.</p>
+      <p>There's no data.</p>
     <?php endif; ?>
   </section>
 
@@ -293,8 +308,7 @@ function mf($v, $dec = 0) { // money format
     <h2>NL — TOP 3 </h2>
     <?php if (!empty($topNL)): ?>
       <table>
-        <tr><th>순위</th><th>팀</th><th>선수 수</th><th>총 연봉</th><th>평균 연봉</th></tr>
-        <?php foreach ($topNL as $i => $r): ?>
+        <tr><th>Rank</th><th>Team</th><th>Number of Player</th><th>Total Salary</th><th>Average Salary</th></tr>        <?php foreach ($topNL as $i => $r): ?>
           <tr>
             <td><?php echo $i+1; ?></td>
             <td><?php echo htmlspecialchars($r['TeamName']); ?></td>
@@ -305,7 +319,7 @@ function mf($v, $dec = 0) { // money format
         <?php endforeach; ?>
       </table>
     <?php else: ?>
-      <p>데이터가 없습니다.</p>
+      <p>There's no data.</p>
     <?php endif; ?>
   </section>
 
@@ -314,8 +328,7 @@ function mf($v, $dec = 0) { // money format
     <h2>NL — BOTTOM 3 </h2>
     <?php if (!empty($botNL)): ?>
       <table>
-        <tr><th>순위</th><th>팀</th><th>선수 수</th><th>총 연봉</th><th>평균 연봉</th></tr>
-        <?php foreach ($botNL as $i => $r): ?>
+          <tr><th>Rank</th><th>Team</th><th>Number of Player</th><th>Total Salary</th><th>Average Salary</th></tr>        <?php foreach ($botNL as $i => $r): ?>
           <tr>
             <td><?php echo $i+1; ?></td>
             <td><?php echo htmlspecialchars($r['TeamName']); ?></td>
@@ -326,7 +339,7 @@ function mf($v, $dec = 0) { // money format
         <?php endforeach; ?>
       </table>
     <?php else: ?>
-      <p>데이터가 없습니다.</p>
+      <p>There's no data.</p>
     <?php endif; ?>
   </section>
 </div>
@@ -348,39 +361,39 @@ function mf($v, $dec = 0) { // money format
 
   // 총 연봉은 NL 리그가 더 높습니다 ($ 차이)
   $totalSentence = ($totalWinner === '동일') 
-    ? "두 리그의 총 연봉이 동일합니다."
-    : "총 연봉은 {$totalWinner} 리그가 더 높습니다 (" . mf($totalDiff) . " 차이)";
+    ? "Total Salaries of Two Leagues are identical."
+    : "Total Salary is higher in {$totalWinner} League (" . mf($totalDiff) . " different)";
   // 평균 연봉은 AL 리그가 더 높습니다 ($ 차이)
   $avgSentence = ($avgWinner === '동일')
-    ? "두 리그의 평균 연봉이 동일합니다."
-    : "평균 연봉은 {$avgWinner} 리그가 더 높습니다 (" . mf($avgDiff, 2) . " 차이)";
+    ? "Average Salaries of Two Leagues are identical."
+    : "Average Salary is higher in {$avgWinner} League (" . mf($avgDiff, 2) . " different)";
 
   // 요약: 총 연봉은 NL 리그가 더 높지만, 평균 연봉은 AL 리그가 더 높습니다.
   $crossSentence = '';
   if ($totalWinner !== '동일' && $avgWinner !== '동일' && $totalWinner !== $avgWinner) {
-    $crossSentence = "요약: 총 연봉은 {$totalWinner} 리그가 더 높지만, 평균 연봉은 {$avgWinner} 리그가 더 높습니다.";
+    $crossSentence = "Summary: Total Salary is higher in {$totalWinner} League, but average salary is higher in {$avgWinner} League.";
   }
   // 참여 선수 수: AL -명 vs NL -명 , 팀 수: AL -팀 vs NL -팀
-  $playerNote = "참여 선수 수: AL " . number_format($alPlayers) . "명 vs NL " . number_format($nlPlayers) . "명";
-  $teamNote   = "팀 수: AL " . number_format($alTeams) . "팀 vs NL " . number_format($nlTeams) . "팀";
+  $playerNote = "Number of Players: AL " . number_format($alPlayers) . " vs NL " . number_format($nlPlayers) . "";
+  $teamNote   = "Number of Teams: AL " . number_format($alTeams) . " vs NL " . number_format($nlTeams) . "";
 
 ?>
 
 <section class="card">
-  <h2>결론 (<?php echo htmlspecialchars($year); ?>년)</h2>
+  <h2>Conclusion (<?php echo htmlspecialchars($year); ?>)</h2>
   <?php if ($AL && $NL): ?>
     <ul>
-      <li><?php echo $totalSentence; ?></li>
-      <li><?php echo $avgSentence; ?></li>
+      <li><?php echo $totalSentence; ?></li><br/>
+      <li><?php echo $avgSentence; ?></li><br/>
       <?php if ($crossSentence): ?><li><?php echo $crossSentence; ?></li><?php endif; ?>
-      <li><?php echo $playerNote; ?></li><li> <?php echo $teamNote; ?></li>
+      <li><?php echo $playerNote; ?></li><br/><li> <?php echo $teamNote; ?></li>
     </ul>
   <?php else: ?>
-    <p>AL/NL 리그 데이터가 모두 있어야 결론을 생성할 수 있습니다.</p>
+    <p>You need AL/NL data both to make conclusion</p>
   <?php endif; ?>
 </section>
 
-<div class='foot'><a href='index.php'>메인으로</a></div>
+<div class='foot'><a href='index.php'>Go to main</a></div>
     </div>
 </body>
 </html>
