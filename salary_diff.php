@@ -110,19 +110,21 @@ function mf($v, $dec = 0) { // money format
 <head>
 <meta charset="UTF-8" />
 <title>리그별 연봉 비교</title>
+<link rel="stylesheet" href="css/main.css" />
+
 <style>
   :root { --card-w: 420px; }
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 26px; }
+  /* body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 26px; }
   h1 { text-align: center; margin: 6px 0 12px; }
   form { text-align: center; margin: 10px 0 22px; }
   form input, form button { padding: 8px 12px; font-size: 14px; }
-  form button { cursor: pointer; }
+  form button { cursor: pointer; } */
 
   .wrap {
-    display: grid;
+    display: flex;
+    justify-content: space-around;
     grid-template-columns: repeat(3, minmax(280px, var(--card-w)));
     gap: 16px;
-    justify-content: center;
     align-items: start;
   }
   @media (max-width: 1200px) {
@@ -138,12 +140,15 @@ function mf($v, $dec = 0) { // money format
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(0,0,0,.04);
     padding: 14px 16px 12px;
+    color: black;
   }
   .card h2 { font-size: 18px; margin: 2px 0 10px; }
 
   table { border-collapse: collapse; width: 100%; }
   th, td { border: 1px solid #eee; padding: 10px 12px; }
-  th { background: #f7f8fb; text-align: center; }
+  th { 
+    /* background: #f7f8fb;  */
+    text-align: center; }
   td { text-align: right; }
   td:first-child, th:first-child { text-align: center; }
 
@@ -162,18 +167,31 @@ function mf($v, $dec = 0) { // money format
   td{text-align:center}
   .card{max-width:980px;margin: 28px auto;}
   .card h2 {margin: 4px 0 10px;}
+
+  .form_horizontal{width:250px}
 </style>
 </head>
 <body>
+  <div class="layout">
 
-<h1>리그별 연봉 비교</h1>
+  <?php
+  include 'pages/nav.php';
+  ?>
+  <h1>리그별 연봉 비교</h1>
 
 <form method="GET" action="salary_diff.php">
   연도는 1985년부터 2015년까지 선택가능합니다. <br><br>
-  <label for="year">연도</label>
-  <input type="number" id="year" name="year" min="1985" max="2015"
-         value="<?php echo htmlspecialchars($year); ?>" />
-  <button type="submit">조회</button>
+
+  <div class="form_horizontal">
+    <div><label for="year">Year</label></div><div>></div>
+    <div>
+      <button class="numBtn" type="button" onclick="this.parentNode.querySelector('#year').stepDown()">-</button>
+      <input type="number" id="year" name="year" value="<?php echo htmlspecialchars($year); ?>" min="1871" max="2015" />
+      <button class="numBtn" type="button" onclick="this.parentNode.querySelector('#year').stepUp()">+</button>
+    </div>
+  </div>
+  <div><input type="submit" id="btn" value="Get Result"></input></div>
+ 
 </form>
 
 <!-- 전체 합계,  리그별 소계-->
@@ -363,6 +381,7 @@ function mf($v, $dec = 0) { // money format
 </section>
 
 <div class='foot'><a href='index.php'>메인으로</a></div>
+    </div>
 </body>
 </html>
 <?php $conn->close(); ?>
