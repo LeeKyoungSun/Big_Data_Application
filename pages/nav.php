@@ -87,7 +87,7 @@
                 <a href="#">Analytics by Team</a> 
                 <ul>
                     <li><a href="team_ranking.php">Score Ranking</a></li>
-                    <li><a href="salary_diff.php">Salary</a></li>
+                    <li><a href="team_salary_olap.php">Salary</a></li>
                 </ul>
             </li>
             <li>
