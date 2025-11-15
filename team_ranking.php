@@ -142,7 +142,7 @@ $lg = isset($_GET['lg']) ? $_GET['lg'] : 'NL';
             ?>
         </table>
 
-        <p style-align:center><a href="index.php">Go main</a></p>
+        <!-- <p style-align:center><a href="index.php">Go main</a></p> -->
 
 </body>
 </html>

@@ -133,7 +133,7 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
         ?>
     </table>
     
-    <p style-align:center><a href="index.php">Go main</a></p>
+    <!-- <p style-align:center><a href="index.php">Go main</a></p> -->
 
 </body>
 </div>
