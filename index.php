@@ -39,15 +39,6 @@ include 'db_connect.php';
         .img-box.active{opacity:1;}
         .img-box img{max-width:100%;max-height:100%;object-fit:contain;}
 
-
-        .btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);border:1px solid #555;color:#fff;padding:12px 14px;border-radius:50%;cursor:pointer;font-size:20px;user-select:none;}
-        .btn:hover{background:rgba(255,255,255,0.15);}
-
-
-        #prev{left:16px;}
-        #next{right:16px;}
-        
-
         .info{position:absolute;bottom:12px;right:16px;font-size:14px;color:#ddd;background:rgba(0,0,0,0.4);padding:4px 10px;border-radius:6px}
     </style>
 </head>
@@ -67,8 +58,8 @@ include 'db_connect.php';
         </div>
         <div class="wrap">
             <div class="stage" id="stage">
-            <button id="prev" class="btn">◀</button>
-            <button id="next" class="btn">▶</button>
+            <!-- <button id="prev" class="btn">◀</button>
+            <button id="next" class="btn">▶</button> -->
             <div class="info" id="info">0 / 0</div>
             </div>
         </div>
@@ -80,8 +71,8 @@ include 'db_connect.php';
 
         const stage = document.getElementById('stage');
         const info = document.getElementById('info');
-        const prev = document.getElementById('prev');
-        const next = document.getElementById('next');
+        // const prev = document.getElementById('prev');
+        // const next = document.getElementById('next');
 
         let imgs = ["image 19.png", "image 20.png","image 22.png","image 23.png","image 17.png", "image 18.png" ];
         let current = 0;
@@ -120,11 +111,6 @@ include 'db_connect.php';
 
         function nextSlide(){ show(current+1); }
         function prevSlide(){ show(current-1); }
-
-
-        next.addEventListener('click', ()=>{ stopAutoSlide(); nextSlide(); startAutoSlide(); });
-        prev.addEventListener('click', ()=>{ stopAutoSlide(); prevSlide(); startAutoSlide(); });
-
 
         function startAutoSlide(){ stopAutoSlide(); timer = setInterval(nextSlide, INTERVAL); }
         function stopAutoSlide(){ if(timer) clearInterval(timer); }
