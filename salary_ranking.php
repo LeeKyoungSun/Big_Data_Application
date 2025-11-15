@@ -31,7 +31,7 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
         }
         /* tr:nth-child(even) { background-color: var(--background-color); } */
         td:first-child, td:last-child { text-align: center; }
-        tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){background-color: #80B0BD ;}
+        tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){background-color: var(--secondary-accent-color) ;}
         td:nth-child(4) { text-align: right; }
         .form_horizontal{width:280px;}
         .numBtn{
@@ -125,7 +125,7 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>해당 연도의 데이터가 없습니다. (1985~2015년 사이로 입력하세요.)</td></tr>";
+            echo "<tr><td colspan='5'>There's no data in the year. (You can get the data in 1985-2015)</td></tr>";
         }
         
         $stmt->close();
@@ -133,7 +133,7 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : 2015;
         ?>
     </table>
     
-    <p style-align:center><a href="index.php">Go main</a></p>
+    <!-- <p style-align:center><a href="index.php">Go main</a></p> -->
 
 </body>
 </div>

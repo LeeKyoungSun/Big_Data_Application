@@ -10,6 +10,17 @@ if (!isset($_SESSION['userid'])) {
 <html>
 <head>
     <title>회원 탈퇴</title>
+        <link rel="stylesheet" href="css/main.css" />
+    <style>
+        button{
+            text-align: center;
+            background-color: var(--background-color);
+            color: var(--text-color); 
+            border: var(--text-color) 1px solid;
+            padding: 10px 15px;
+            font-size: var(--font-size-base);
+        }
+    </style>
 </head>
 <body style="text-align: center; padding-top: 50px;">
     <h1 style="color:red;">정말로 탈퇴하시겠습니까?</h1>

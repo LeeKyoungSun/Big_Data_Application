@@ -38,7 +38,7 @@ $lg = isset($_GET['lg']) ? $_GET['lg'] : 'NL';
             text-align: center; 
         }
         /* 상위 3개 팀 */
-        tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){background-color: #80B0BD ;}
+        tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){background-color: var(--secondary-accent-color) ;}
         td:nth-child(2) { text-align: left; }
         td:nth-child(1),td:nth-child(5){width: 15%;}
         .form_horizontal{width:280px;}
@@ -142,7 +142,7 @@ $lg = isset($_GET['lg']) ? $_GET['lg'] : 'NL';
             ?>
         </table>
 
-        <p style-align:center><a href="index.php">Go main</a></p>
+        <!-- <p style-align:center><a href="index.php">Go main</a></p> -->
 
 </body>
 </html>

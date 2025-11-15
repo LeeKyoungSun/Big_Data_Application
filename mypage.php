@@ -3,33 +3,42 @@ session_start();
 
 if (!isset($_SESSION['userid'])) {
     echo "<script>
-            alert('로그인이 필요합니다.');
+            alert('You need to Log in.');
             location.href = 'login.php';
           </script>";
     exit;
 }
 ?>
-
-// 마이페이지에서 이름 변경
+<?php
+include 'pages/nav.php';
+?>
+<!-- // 마이페이지에서 이름 변경 -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>마이페이지</title>
+    <title>My Page</title>
+    <link rel="stylesheet" href="css/main.css" />
+
 </head>
 <body>
-    <h1>마이페이지</h1>
-    <p><strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>님 (ID: <?php echo htmlspecialchars($_SESSION['userid']); ?>)</p>
+    <div class="layout">
+    <h1>My Page</h1>
+    <p><strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong> (ID: <?php echo htmlspecialchars($_SESSION['userid']); ?>)</p>
     
     <form action="mypage_process.php" method="POST">
-        <label for="userName">변경할 이름:</label>
-        <input type="text" id="userName" name="userName" 
-               value="<?php echo htmlspecialchars($_SESSION['username']); ?>" required>
-        <br>
-        <input type="submit" value="이름 변경">
+        
+        <div>
+            <label for="userName">Name to change:</label>
+            <input type="text" id="userName" name="userName" 
+                value="<?php echo htmlspecialchars($_SESSION['username']); ?>" required>
+        </div>
+        <br/>
+        <input id="btn"type="submit" value="Change Name">
     </form>
-    <br>
-    <a href="index.php">홈</a> | 
-    <a href="logout_process.php">로그아웃</a> | 
-    <a href="delete_account.php" style="color:red;">회원 탈퇴</a>
+    <br/><br/>
+    <a href="index.php">Home</a> | 
+    <a href="logout_process.php">Log Out</a> | 
+    <a href="delete_account.php" style="color:red;">delete account</a>
+    </div>
 </body>
 </html>

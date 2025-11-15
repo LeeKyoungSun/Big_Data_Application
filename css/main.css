@@ -2,6 +2,7 @@
     /* 🎨 색상 팔레트 */
     --background-color: #000000;
     --accent-color: #296677;
+    --secondary-accent-color:#80B0BD;
     --text-color: #dee2e6;
     --secondary-text-color: #FAFAF8;
     
@@ -11,6 +12,7 @@
     --font-size-medium: 32px;
     --font-size-heading: 48px;
     --line-height: 1.6;
+    font-size: var(--font-size-base);
 }
 h1{
     font-size: var(--font-size-heading);
@@ -27,6 +29,7 @@ body{
     display: center;
     text-align: left;
     margin: auto;
+    margin-bottom: 60px;
 }
 div {
     margin-bottom: 20px;
@@ -71,6 +74,10 @@ table{
     border: var(--text-color) 1px solid ;
     color: var(--background-color);
 }
+th {
+    background-color: var(--accent-color);
+    text-align: center;
+}
 #userPage input {
      width: 500px ;
      box-sizing: border-box;
@@ -82,6 +89,8 @@ table{
     color: var(--background-color);
     width: fit-content !important;
     text-align: center;
+    border: 1px solid var(--text-color);
+    padding: 10px 15px;
 }
 #userPage #btn {
     text-align: center;

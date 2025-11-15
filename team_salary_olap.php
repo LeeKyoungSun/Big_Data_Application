@@ -101,7 +101,11 @@ function mf($v, $dec = 0) { // money format
   form input, form button { padding: 8px 12px; font-size: 14px; }
   form button { cursor: pointer; } */
 
-  .wrap {
+  #cardContainer {
+    width: 100%;
+    
+  }
+  .wrap{
     display: flex;
     justify-content: space-around;
     grid-template-columns: repeat(3, minmax(280px, var(--card-w)));
@@ -117,12 +121,14 @@ function mf($v, $dec = 0) { // money format
 
   
   .carousel {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  /* gap: 12px; */
 }
-
+.carousel .prev { left: 10px; }
+.carousel .next { right: 10px; }
 .nav-btn {
   background: transparent;
   border: none;
@@ -181,7 +187,13 @@ function mf($v, $dec = 0) { // money format
   input[type=number] {
   -moz-appearance: textfield;
   }
-
+  .card.conclusion{
+    width: 100% !important;
+    padding: auto;
+  }
+  .conclusion tr:nth-child(2),
+  .conclusion tr:nth-child(3),
+  .conclusion tr:nth-child(4){background-color: var(--secondary-accent-color) ;}
 
 
 
@@ -222,13 +234,14 @@ function mf($v, $dec = 0) { // money format
   <div><input type="submit" id="btn" value="Get Result"></input></div>
  
 </form>
-
+<br/>
+<h2>Salary Comparison (<?php echo htmlspecialchars($year) . ' ' . htmlspecialchars($lg); ?>)</h2>
 <div class="carousel">
   <button class="nav-btn prev" type="button">&#10094;</button>
 
   <div class="wrap" id="cardContainer">
     <?php if ($overall): ?>
-      <section class="card">
+      <section class="card" style="background-color: var(--secondary-accent-color);">
         <h2>All Teams (<?php echo htmlspecialchars($lg); ?>)</h2>
         <table>
           <tr><th>Index</th><th>Value</th></tr>
@@ -241,7 +254,7 @@ function mf($v, $dec = 0) { // money format
 
     <?php foreach ($teams as $row): ?>
       <section class="card">
-        <h2>Team <?php echo htmlspecialchars($row['TeamName']); ?></h2>
+        <h2>Team: <?php echo htmlspecialchars($row['TeamName']); ?></h2>
         <table>
           <tr><th>Index</th><th>Value</th></tr>
           <tr><td>Number of Player</td><td><?php echo number_format($row['PlayerCount']); ?></td></tr>
@@ -254,7 +267,7 @@ function mf($v, $dec = 0) { // money format
 
   <button class="nav-btn next" type="button">&#10095;</button>
 </div>
-<section class="card">
+<section class=" conclusion" id="cardContainer">
   <h2>Conclusion (<?php echo htmlspecialchars($year) . ' ' . htmlspecialchars($lg); ?>)</h2>
   <?php if (!empty($ranks)): ?>
     <table>
@@ -278,8 +291,6 @@ function mf($v, $dec = 0) { // money format
   <?php endif; ?>
 </section>
 
-
-<div class='foot'><a href='index.php'>Go to main</a></div>
 </div>
 
 <script>

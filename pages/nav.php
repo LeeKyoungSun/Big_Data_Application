@@ -87,31 +87,35 @@
                 <a href="#">Analytics by Team</a> 
                 <ul>
                     <li><a href="team_ranking.php">Score Ranking</a></li>
-                    <li><a href="team_salary_olap.php">Salary</a></li>
+                    <li><a href="team_salary_olap.php">Salary Comparison</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">Analytics by Season/Game</a> 
                 <ul>
-                    <li><a href="game_salary_olap.php">salary</a></li>
-                    <li><a href="game_position.php">position</a></li>
+                    <li><a href="game_position.php">Position Distribution</a></li>
+                    <li><a href="game_salary_olap.php">Salary Comparison</a></li>
                 </ul>
             </li>
             <li class="login-menu">
             <?php if (isset($_SESSION['userid'])): ?>
                     <!-- 1. 로그인 성공 -->
-                    <p>
-                        <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>님 환영합니다!
-                    </p>
-                    <a href="mypage.php">My Page</a> |
-                    <a href="logout_process.php">Logout</a>
-            
+                    <a>
+                        <strong>Welcome <?php echo htmlspecialchars($_SESSION['username']); ?></strong>!
+                    </a>
+                    <ul>
+                    <li><a href="mypage.php">My Page</a></li> 
+                    <li><a href="logout_process.php">Logout</a></li>
+                    </ul>
                 <?php else: ?>
                     <!-- 2. 로그인 안 됨 -->
                     <!-- <p>You need to Login.</p> -->
-                    <a href="login.php">Login</a> |
-                    <a href="register.php">Sign Up</a>
-            
+                    <a>Login | Sign Up</a>
+                    <ul>
+                        <li><a href="login.php">Login</a></li> 
+                        <li><a href="register.php">Sign Up</a></li>
+                    </ul>
+                 
                 <?php endif; ?>
             </li>
         </ul>

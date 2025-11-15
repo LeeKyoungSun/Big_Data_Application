@@ -55,6 +55,7 @@ function mf($v, $dec = 0) { // money format
   form button { cursor: pointer; } */
 
   .wrap {
+    width: 90%;
     display: flex;
     justify-content: space-around;
     grid-template-columns: repeat(3, minmax(280px, var(--card-w)));
@@ -115,6 +116,24 @@ function mf($v, $dec = 0) { // money format
   input[type=number] {
   -moz-appearance: textfield;
   }
+  .conclusion{
+    width: 90%;
+    margin: 0 auto;
+    padding: auto;
+    background-color: white;
+    border: 1px solid #e6e6e6;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    padding: 14px 16px 12px;
+    /* color: black; */
+  }
+  .conclusion >section{
+    box-shadow: none;
+    border: 0;
+    font-size: 18px;
+    margin-left: 0;
+    line-height: 1.7;
+}
 </style>
 </head>
 <body>
@@ -141,9 +160,11 @@ function mf($v, $dec = 0) { // money format
   <div><input type="submit" id="btn" value="Get Result"></input></div>
  
 </form>
-
+<br/>
 <!-- 전체 합계,  리그별 소계-->
-<div class="wrap">
+<h2>Salary Comparison (<?php echo htmlspecialchars($year); ?>)</h2>
+
+<div class="wrap" >
   <section class="card">
     <h2>Total</h2>
     <?php if ($overall): ?>
@@ -218,30 +239,48 @@ function mf($v, $dec = 0) { // money format
   // 요약: 총 연봉은 NL 리그가 더 높지만, 평균 연봉은 AL 리그가 더 높습니다.
   $crossSentence = '';
   if ($totalWinner !== '동일' && $avgWinner !== '동일' && $totalWinner !== $avgWinner) {
-    $crossSentence = "Summary: Total Salary is higher in {$totalWinner} League, but average salary is higher in {$avgWinner} League.";
+    $crossSentence = "To summarize, Total Salary is higher in {$totalWinner} League, but average salary is higher in {$avgWinner} League.";
   }
   // 참여 선수 수: AL -명 vs NL -명 , 팀 수: AL -팀 vs NL -팀
-  $playerNote = "Number of Players: AL " . number_format($alPlayers) . " vs NL " . number_format($nlPlayers) . "";
-  $teamNote   = "Number of Teams: AL " . number_format($alTeams) . " vs NL " . number_format($nlTeams) . "";
+  $symbol = $alPlayers > $nlPlayers ? ' > ' : ($alPlayers < $nlPlayers ? ' < ' : ' = ');  
+  $playerNote = "Number of Players: AL (" . number_format($alPlayers) . ")" . ($alPlayers > $nlPlayers ? ' > ' : ($alPlayers < $nlPlayers ? ' < ' : ' = ')). "NL (" . number_format($nlPlayers) . ")";
+  $teamNote   = "Number of Teams: AL (" . number_format($alTeams) . ") ".($alTeams > $nlTeams ? ' > ' : ($alTeams < $nlTeams ? ' < ' : ' = '))." NL (" . number_format($nlTeams) . ")";
 
 ?>
+<h2>Conclusion (<?php echo htmlspecialchars($year); ?>)</h2>
 
-<section class="card">
-  <h2>Conclusion (<?php echo htmlspecialchars($year); ?>)</h2>
-  <?php if ($AL && $NL): ?>
-    <ul>
-      <li><?php echo $totalSentence; ?></li><br/>
-      <li><?php echo $avgSentence; ?></li><br/>
-      <?php if ($crossSentence): ?><li><?php echo $crossSentence; ?></li><br/><?php endif; ?>
-      <li><?php echo $playerNote; ?></li><br/>
-      <li> <?php echo $teamNote; ?></li>
-    </ul>
-  <?php else: ?>
-    <p>You need AL/NL data both to make conclusion</p>
-  <?php endif; ?>
-</section>
+<?php if ($AL && $NL): ?>
+  <table style="text-align: left !important">
+    <tr>
+        <th>Analysis</th>
+      </tr>
+    <tr>
+      <td><?php echo $totalSentence; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $avgSentence; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $playerNote; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $teamNote; ?></td>
+    </tr>
+  </table>
+  <table>
+    <?php if ($crossSentence): ?>
+      <!-- <tr style="background-color: var(--secondary-accent-color);"> -->
+      <tr style="font-size: 20px;">
+        <td><?php echo $crossSentence; ?></td>
+      </tr><br /><?php endif; ?>
+  </table>
 
-<div class='foot'><a href='index.php'>Go to main</a></div>
+<?php else: ?>
+  <p>You need AL/NL data both to make conclusion</p>
+<?php endif; ?>
+
+
+
     </div>
 </body>
 </html>

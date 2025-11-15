@@ -393,7 +393,6 @@ function mf($v, $dec = 0) { // money format
   <?php endif; ?>
 </section>
 
-<div class='foot'><a href='index.php'>Go to main</a></div>
     </div>
 </body>
 </html>

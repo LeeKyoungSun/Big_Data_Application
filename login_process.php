@@ -22,20 +22,20 @@ if ($result->num_rows == 1) {
         $_SESSION['username'] = $row['userName'];
         
         echo "<script>
-                alert('" . $_SESSION['username'] . "님, 환영합니다!');
+                alert('welcome " . $_SESSION['username'] . "');
                 location.href = 'index.php'; // 메인 페이지로 이동
               </script>";
     } else {
         // 로그인 실패 1. 비밀번호 불일치
         echo "<script>
-                alert('비밀번호가 일치하지 않습니다.');
+                alert('Wrong Password.');
                 window.history.back();
               </script>";
     }
 } else {
     // 로그인 실패 2. 아이디 없음
     echo "<script>
-            alert('존재하지 않는 아이디입니다.');
+            alert('ID is not exist.');
             window.history.back();
           </script>";
 }

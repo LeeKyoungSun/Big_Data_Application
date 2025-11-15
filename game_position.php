@@ -41,6 +41,21 @@ include 'db_connect.php';
             /* flex-direction: column; */
             /* width: 80%; */
         }
+        th{
+            background-color: var(--accent-color);
+
+        }
+        th,td{
+            text-align: center; 
+            border: 1px solid #ddd; padding: 8px; 
+        }
+        tr:last-child{
+            background-color: var(--secondary-accent-color);
+        }
+        .chart-wrapper{
+            max-width: 600px;
+            height: auto;
+        }
     </style>
 </head>
 
@@ -73,7 +88,7 @@ include 'db_connect.php';
            </div>
        </div>
 
-       <button id="searchBtn" disabled> Get Result </button>
+       <button id="btn" disabled> Get Result </button>
    </div>
 
    <div id="loadingDiv" class="loading" style="display:none;">
@@ -103,10 +118,10 @@ include 'db_connect.php';
             </table>
 
         </div>
-        <h2>Players who played the game</h2>
+        <!-- <h2>Players who played the game</h2>
         <div>여기에 경기별 player 명단 들어갈 예정</div>
         <div>
-            <!-- 경기별 명단  -->
+            경기별 명단
             <table>
             <tr>
                 <th>Position</th>
@@ -116,7 +131,7 @@ include 'db_connect.php';
             
             
         </table>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -135,7 +150,7 @@ include 'db_connect.php';
                 years.forEach(year => {
                     const option = document.createElement('option');
                     option.value = year;
-                    option.textContent = `${year}년`;
+                    option.textContent = `${year}`;
                     select.appendChild(option);
                 });
             })
@@ -146,7 +161,7 @@ include 'db_connect.php';
     document.getElementById('yearSelect').addEventListener('change', function() {
         const yearID = this.value;
         const gameSelect = document.getElementById('gameSelect');
-        const searchBtn = document.getElementById('searchBtn');
+        const searchBtn = document.getElementById('btn');
 
         gameSelect.innerHTML = '<option value="">Select Game</option>';
         gameSelect.disabled = true;
@@ -175,12 +190,12 @@ include 'db_connect.php';
 
     // 경기 선택 시 버튼 활성화
     document.getElementById('gameSelect').addEventListener('change', function() {
-        const searchBtn = document.getElementById('searchBtn');
+        const searchBtn = document.getElementById('btn');
         searchBtn.disabled = !this.value;
     });
 
     // 조회 버튼 클릭
-    document.getElementById('searchBtn').addEventListener('click', function() {
+    document.getElementById('btn').addEventListener('click', function() {
         const gameID = document.getElementById('gameSelect').value;
         if (!gameID) return;
 
@@ -208,8 +223,8 @@ include 'db_connect.php';
     });
 
     function displayResults(roster) {
-        const positions = roster.filter(r => r.position !== '총계 (Total)');
-        const total = roster.find(r => r.position === '총계 (Total)');
+        const positions = roster.filter(r => r.position !== 'Total');
+        const total = roster.find(r => r.position === 'Total');
         const totalCount = total ? parseInt(total.playerCount) : 0;
         console.log(totalCount);
         displayPieChart(positions, totalCount);
@@ -287,18 +302,18 @@ include 'db_connect.php';
 
         roster.forEach(item => {
             const row = tbody.insertRow();
-            const isTotal = item.position === '총계 (Total)';
+            const isTotal = item.position === 'Total';
 
             if (isTotal) {
                 row.classList.add('total-row');
             }
 
             const count = parseInt(item.playerCount);
-            const percentage = totalCount > 0 ? ((count / totalCount) * 100).toFixed(1) : '0.0';
+            const percentage = totalCount > 0 ? ((count *100)/ totalCount).toFixed(1) : '0.0';
 
             row.innerHTML = `
-                <td><span class="position-badge" style="background: ${isTotal ? '#f5576c' : '#e9ecef'}; color: ${isTotal ? 'white' : '#333'}">${item.position}</span></td>
-                <td><strong>${count}명</strong></td>
+                <td><span class="position-badge">${item.position}</span></td>
+                <td><strong>${count}</strong></td>
                 <td>${isTotal ? '100.0' : percentage}%</td>
             `;
         });
