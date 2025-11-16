@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
         $sql = "SELECT DISTINCT b.playerID, m.nameFirst, m.nameLast
                 FROM Batting b
                 JOIN Master m ON b.playerID = m.playerID
-                WHERE b.teamID = ? AND b.AB > 50
+                WHERE b.teamID = ? AND b.AB > 25
                 ORDER BY m.nameLast, m.nameFirst";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $teamID);
@@ -70,7 +70,7 @@ if (isset($_GET['action'])) {
             GROUP BY
                 playerID, yearID
             HAVING
-                SUM(AB) >= 50
+                SUM(AB) >= 25
         ";
 
         $stmt = $conn->prepare($aggregateSql);
@@ -86,7 +86,7 @@ if (isset($_GET['action'])) {
         $stmt->close();
 
         if (empty($aggregateData)) {
-            echo json_encode(['error' => "'$playerID'에 대한 데이터가 없거나, 연간 AB 50 이상인 시즌이 없습니다."]);
+            echo json_encode(['error' => "'$playerID'에 대한 데이터가 없거나, 연간 AB 25 이상인 시즌이 없습니다.']);
             exit;
         }
 
