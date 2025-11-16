@@ -49,13 +49,16 @@ include 'db_connect.php';
             text-align: center; 
             border: 1px solid #ddd; padding: 8px; 
         }
-        tr:last-child{
+        #rosterTableBody tr:last-child{
             background-color: var(--secondary-accent-color);
         }
         .chart-wrapper{
             max-width: 600px;
             height: auto;
         }
+        /* #player-list{
+            text-align: ;
+        } */
     </style>
 </head>
 
@@ -64,7 +67,7 @@ include 'db_connect.php';
         <?php
         include 'pages/nav.php';
         ?>
-        <h1>Get Position distribution <br/>& Players who played the game.</h1>
+        <h1>Get Position Distribution <br/>& Players List.</h1>
         <div>
             Get Position distribution & Players who played the game.<br/>
             you can filter the games by the year and game Num. 
@@ -98,13 +101,13 @@ include 'db_connect.php';
    <div id="errorDiv" class="error-message" style="display:none;"></div>
 
    <div id="resultsContainer" class="results-container">
-        
+        <br/>
         <h2>Position distribution</h2>
         <div class="chart-wrapper">
             <div class="chart-container">
                 <canvas id="pieChart"></canvas>
             </div>
-            <h2>Position roster-table</h2>
+            <h2>Position Roster Table</h2>
 
             <table class="chart-container roster-table">
                 <thead>
@@ -118,20 +121,20 @@ include 'db_connect.php';
             </table>
 
         </div>
-        <!-- <h2>Players who played the game</h2>
-        <div>여기에 경기별 player 명단 들어갈 예정</div>
+        <br/>
+        <h2>Player List</h2>
+        <!-- <div>여기에 경기별 player 명단 들어갈 예정</div> -->
         <div>
-            경기별 명단
             <table>
-            <tr>
-                <th>Position</th>
-                <th>Team</th>
-                <th>Player Name</th>
-            </tr>
-            
-            
-        </table>
-        </div> -->
+                <thread>
+                    <tr>
+                    <th>Position</th>
+                    <th>Player Name</th>
+                    </tr>
+                </thread>
+                <tbody id="player-list"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -197,6 +200,7 @@ include 'db_connect.php';
     // 조회 버튼 클릭
     document.getElementById('btn').addEventListener('click', function() {
         const gameID = document.getElementById('gameSelect').value;
+        var num=3;
         if (!gameID) return;
 
         showLoading(true);
@@ -213,16 +217,34 @@ include 'db_connect.php';
                 } 
                 else if (data.success) {
                     displayResults(data.roster);
+                    num=data.roster.length-1;
                 }
             })
+            .then(fetch(`game_roster.php?action=getPlayers&gameID=${gameID}`)
+                .then(res => res.json())
+                .then(data => {
+                    showLoading(false);
+                    console.log(data);
+                    if (data.error) {
+                        console.log(data.error);
+                    } 
+                    else if (data.success) {
+                        console.log(num);
+                        displayList(data.players, num);
+                    }
+                })
+            )
             .catch(err => {
                 showLoading(false);
                 console.error('fetch error:', err);
                 showError('데이터를 불러오는데 실패했습니다.');
             });
+            
+        
     });
 
     function displayResults(roster) {
+        console.log("roster: ",roster);
         const positions = roster.filter(r => r.position !== 'Total');
         const total = roster.find(r => r.position === 'Total');
         const totalCount = total ? parseInt(total.playerCount) : 0;
@@ -318,7 +340,30 @@ include 'db_connect.php';
             `;
         });
     }
+    function displayList(players,positionNum) {
+        const tbody = document.getElementById('player-list');
+        tbody.innerHTML = `
+              
+                `
+        
+        for (let i=0;i<positionNum;i++){
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <tr>
+                    <td>${i}</td>
+                    <td><span id="player-name-${i}"> </span></td>
+                </tr>
+                `;
+            }
 
+        players.forEach(item => {
+            // const row = tbody.insertRow();
+            const playerName = (item.firstName +" "+item.lastName);
+            const position = item.position;
+            const nameList = document.getElementById(`player-name-${position}`);
+            nameList.append(playerName,", ");
+        });
+    }
     function showLoading(show) {
         document.getElementById('loadingDiv').style.display = show ? 'block' : 'none';
     }
