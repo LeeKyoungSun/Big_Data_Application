@@ -43,12 +43,10 @@ if (isset($_GET['action'])) {
     if ($_GET['action'] === 'getRoster' && isset($_GET['gameID'])) {
         $gameID = $_GET['gameID'];
 
-        // ROLLUP 결과를 서브쿼리로 감싸서 ORDER BY 적용
+        // 방법 1: 포지션별 집계만 (WITH ROLLUP 사용)
         $sql = "
             SELECT
                 position,
-                firstName,
-                lastName,
                 playerCount
             FROM (
                 SELECT
@@ -56,8 +54,6 @@ if (isset($_GET['action'])) {
                         WHEN a.startingPos IS NULL THEN 'Total'
                         ELSE CAST(a.startingPos AS CHAR)
                     END AS position,
-                    '' AS firstName,
-                    '' AS lastName,
                     COUNT(*) AS playerCount,
                     a.startingPos AS sortPos
                 FROM
@@ -87,8 +83,6 @@ if (isset($_GET['action'])) {
             while ($row = $result->fetch_assoc()) {
                 $roster[] = [
                     'position' => $row['position'],
-                    'firstName' => $row['firstName'],
-                    'lastName' => $row['lastName'],
                     'playerCount' => (int)$row['playerCount']
                 ];
             }
@@ -97,6 +91,60 @@ if (isset($_GET['action'])) {
                 echo json_encode(['error' => "'$gameID'에 대한 데이터가 없습니다."]);
             } else {
                 echo json_encode(['success' => true, 'roster' => $roster], JSON_UNESCAPED_UNICODE);
+            }
+        } else {
+            echo json_encode(['error' => '쿼리 실행 오류: ' . $stmt->error]);
+        }
+        $stmt->close();
+        exit;
+    }
+
+    // 경기별 출전 선수 명단 조회 (firstName, lastName 포함)
+    if ($_GET['action'] === 'getPlayers' && isset($_GET['gameID'])) {
+        $gameID = $_GET['gameID'];
+
+        $sql = "
+            SELECT
+                a.playerID,
+                m.nameFirst AS firstName,
+                m.nameLast AS lastName,
+                CAST(a.startingPos AS CHAR) AS position
+            FROM
+                AllstarFull a
+            JOIN
+                Master m ON a.playerID = m.playerID
+            WHERE
+                a.gameID = ?
+            ORDER BY
+                a.startingPos ASC,
+                m.nameLast ASC,
+                m.nameFirst ASC
+        ";
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            echo json_encode(['error' => '쿼리 준비 오류: ' . $conn->error]);
+            exit;
+        }
+
+        $stmt->bind_param("s", $gameID);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $players = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $players[] = [
+                    'playerID' => $row['playerID'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName'],
+                    'position' => $row['position']
+                ];
+            }
+
+            if (empty($players)) {
+                echo json_encode(['error' => "'$gameID'에 대한 선수 데이터가 없습니다."]);
+            } else {
+                echo json_encode(['success' => true, 'players' => $players], JSON_UNESCAPED_UNICODE);
             }
         } else {
             echo json_encode(['error' => '쿼리 실행 오류: ' . $stmt->error]);
