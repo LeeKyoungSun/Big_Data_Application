@@ -86,7 +86,7 @@ if (isset($_GET['action'])) {
         $stmt->close();
 
         if (empty($aggregateData)) {
-            echo json_encode(['error' => "'$playerID'에 대한 데이터가 없거나, 연간 AB 25 이상인 시즌이 없습니다.']);
+            echo json_encode(['error' => "'$playerID'에 대한 데이터가 없거나, 연간 AB 25 이상인 시즌이 없습니다.'"]);
             exit;
         }
 

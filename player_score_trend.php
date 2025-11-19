@@ -72,7 +72,9 @@ include 'db_connect.php';
                     select.appendChild(option);
                 });
             })
-            .catch(err => showError('팀 목록을 불러오는데 실패했습니다.'));
+            .catch(err => {console.error('fetch error:', err);
+              console.log('팀 목록을 불러오는데 실패했습니다.');
+             });
     }
     const teamSelect = document.getElementById("teamSelect");
     const playerSelect = document.getElementById("playerSelect");
@@ -105,7 +107,7 @@ include 'db_connect.php';
           })
           .catch(err => {
               console.error('fetch error:', err);
-              showError('경기 목록을 불러오는데 실패했습니다.');
+              // showError('경기 목록을 불러오는데 실패했습니다.');
           }); 
       }
       playerSelect.disabled = false;
@@ -197,7 +199,7 @@ include 'db_connect.php';
           .catch(err => {
               console.error('fetch error:', err);
               // console.log(data);
-              showError('경기 목록을 불러오는데 실패했습니다.');
+              // showError('경기 목록을 불러오는데 실패했습니다.');
           }); 
       
       
